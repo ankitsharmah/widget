@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrustVoice Widget Demo — Third-Party Site</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: #f8fafc;
+        color: #1e293b;
+      }
+
+      /* Fake third-party website header */
+      .site-header {
+        background: #0f172a;
+        color: #fff;
+        padding: 16px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .site-logo { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; }
+      .site-nav { display: flex; gap: 24px; }
+      .site-nav a {
+        color: rgba(255,255,255,0.7);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .site-nav a:hover { color: #fff; }
+
+      /* Hero section of fake website */
+      .site-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+        color: #fff;
+        padding: 80px 40px;
+        text-align: center;
+      }
+      .site-hero h1 {
+        font-size: clamp(32px, 5vw, 56px);
+        font-weight: 900;
+        margin-bottom: 16px;
+        line-height: 1.1;
+      }
+      .site-hero p {
+        font-size: 18px;
+        color: rgba(255,255,255,0.75);
+        max-width: 540px;
+        margin: 0 auto 32px;
+      }
+      .site-hero-btn {
+        background: #3b82f6;
+        color: #fff;
+        padding: 14px 32px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        display: inline-block;
+        transition: background 0.2s;
+      }
+      .site-hero-btn:hover { background: #2563eb; }
+
+      /* Fake features */
+      .site-features {
+        padding: 64px 40px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .site-features h2 {
+        font-size: 28px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 40px;
+        color: #0f172a;
+      }
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 24px;
+        margin-bottom: 0;
+      }
+      .feature-card {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 28px;
+        text-align: center;
+      }
+      .feature-icon { font-size: 36px; margin-bottom: 14px; }
+      .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+      .feature-card p { font-size: 14px; color: #64748b; line-height: 1.6; }
+
+      /* ===== WIDGET SECTION ===== */
+      .widget-section {
+        background: #f1f5f9;
+        padding: 64px 40px;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      /* Widget config controls (for demo) */
+      .widget-controls {
+        max-width: 900px;
+        margin: 0 auto 36px;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px 24px;
+        display: flex;
+        gap: 20px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+      }
+      .widget-controls label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .widget-controls select,
+      .widget-controls input[type="color"] {
+        padding: 6px 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .widget-controls input[type="color"] {
+        height: 36px;
+        width: 60px;
+        padding: 2px 4px;
+      }
+      .reload-btn {
+        background: #3b82f6;
+        color: #fff;
+        border: none;
+        padding: 9px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .reload-btn:hover { background: #2563eb; }
+
+      /* Widget container */
+      #trustvoice-widget {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* Fake footer */
+      .site-footer {
+        background: #0f172a;
+        color: rgba(255,255,255,0.5);
+        text-align: center;
+        padding: 32px 40px;
+        font-size: 13px;
+      }
+
+      /* Embed code snippet */
+      .embed-snippet {
+        max-width: 900px;
+        margin: 32px auto 0;
+        background: #1e293b;
+        color: #e2e8f0;
+        border-radius: 12px;
+        padding: 20px 24px;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.7;
+        overflow-x: auto;
+      }
+      .embed-snippet .tag { color: #93c5fd; }
+      .embed-snippet .attr { color: #a5f3fc; }
+      .embed-snippet .val  { color: #86efac; }
+    </style>
+  </head>
+  <body>
+
+    <!-- Fake third-party site header -->
+    <header class="site-header">
+      <div class="site-logo">🚀 AcmeSaaS</div>
+      <nav class="site-nav">
+        <a href="#">Product</a>
+        <a href="#">Pricing</a>
+        <a href="#">Docs</a>
+        <a href="#">Blog</a>
+      </nav>
+    </header>
+
+    <!-- Fake hero -->
+    <section class="site-hero">
+      <h1>Build Faster.<br />Ship Smarter.</h1>
+      <p>The developer platform that scales with you from zero to millions.</p>
+      <a href="#" class="site-hero-btn">Start for Free →</a>
+    </section>
+
+    <!-- Fake features -->
+    <section class="site-features">
+      <h2>Why 10,000+ teams choose AcmeSaaS</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Blazing Fast</h3>
+          <p>Edge-deployed infrastructure with sub-50ms response times globally.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Secure by Default</h3>
+          <p>SOC 2 Type II certified with end-to-end encryption on all data.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Deep Analytics</h3>
+          <p>Real-time dashboards with actionable insights for every team.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h3>100+ Integrations</h3>
+          <p>Connect to your stack in minutes. No custom code required.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TRUSTVOICE WIDGET EMBED ===== -->
+    <section class="widget-section">
+
+      <!-- Demo controls (not part of embed — just for this demo page) -->
+      <div class="widget-controls">
+        <span style="font-size:13px;font-weight:700;color:#374151;align-self:center;">
+          🎛️ Live Widget Demo Controls:
+        </span>
+        <label>
+          Layout
+          <select id="ctrl-layout">
+            <option value="grid">Grid</option>
+            <option value="list">List</option>
+            <option value="carousel">Carousel</option>
+          </select>
+        </label>
+        <label>
+          Accent Color
+          <input type="color" id="ctrl-color" value="#6366f1" />
+        </label>
+        <label>
+          Max Items
+          <select id="ctrl-limit">
+            <option value="3">3</option>
+            <option value="6" selected>6</option>
+            <option value="9">9</option>
+          </select>
+        </label>
+        <button class="reload-btn" onclick="reloadWidget()">↺ Reload Widget</button>
+      </div>
+
+      <!-- The actual embed target -->
+      <div id="trustvoice-widget"></div>
+
+      <!-- Embed code example -->
+      <div class="embed-snippet">
+        <span class="tag">&lt;div</span> <span class="attr">id=</span><span class="val">"trustvoice-widget"</span><span class="tag">&gt;&lt;/div&gt;</span><br/>
+        <span class="tag">&lt;script</span><br/>
+        &nbsp;&nbsp;<span class="attr">src=</span><span class="val">"https://your-domain.com/widget.js"</span><br/>
+        &nbsp;&nbsp;<span class="attr">data-accent=</span><span class="val">"#6366f1"</span><br/>
+        &nbsp;&nbsp;<span class="attr">data-layout=</span><span class="val">"grid"</span><br/>
+        &nbsp;&nbsp;<span class="attr">data-limit=</span><span class="val">"6"</span><br/>
+        <span class="tag">&gt;&lt;/script&gt;</span>
+      </div>
+    </section>
+
+    <!-- Fake footer -->
+    <footer class="site-footer">
+      © 2024 AcmeSaaS Inc. — This is a demo page showing TrustVoice widget embed.
+    </footer>
+
+    <!-- Load the widget script -->
+    <script src="../frontend/public/widget.js"
+      data-accent="#6366f1"
+      data-limit="6"
+      data-layout="grid">
+    </script>
+
+    <!-- Demo controls logic -->
+    <script>
+      function reloadWidget() {
+        const layout = document.getElementById('ctrl-layout').value;
+        const color  = document.getElementById('ctrl-color').value;
+        const limit  = document.getElementById('ctrl-limit').value;
+
+        // Update embed snippet display
+        const snippet = document.querySelector('.embed-snippet');
+        snippet.innerHTML = `
+          <span class="tag">&lt;div</span> <span class="attr">id=</span><span class="val">"trustvoice-widget"</span><span class="tag">&gt;&lt;/div&gt;</span><br/>
+          <span class="tag">&lt;script</span><br/>
+          &nbsp;&nbsp;<span class="attr">src=</span><span class="val">"https://your-domain.com/widget.js"</span><br/>
+          &nbsp;&nbsp;<span class="attr">data-accent=</span><span class="val">"${color}"</span><br/>
+          &nbsp;&nbsp;<span class="attr">data-layout=</span><span class="val">"${layout}"</span><br/>
+          &nbsp;&nbsp;<span class="attr">data-limit=</span><span class="val">"${limit}"</span><br/>
+          <span class="tag">&gt;&lt;/script&gt;</span>
+        `;
+
+        // Reload the widget with new config
+        const API_BASE = 'https://advocacy-testimonials-backend.vercel.app/api';
+        const container = document.getElementById('trustvoice-widget');
+        container.innerHTML = '<div style="text-align:center;padding:40px;color:#6b7280;font-size:14px">Loading testimonials…</div>';
+
+        fetch(`${API_BASE}/widget/testimonials?limit=${limit}&accentColor=${encodeURIComponent(color.replace('#',''))}&layout=${layout}`)
+          .then(r => r.json())
+          .then(data => {
+            if (!data.success || !data.data.length) {
+              container.innerHTML = '<div style="text-align:center;padding:40px;color:#6b7280">No testimonials yet. Submit some first!</div>';
+              return;
+            }
+
+            const hexToRgb = hex => {
+              const r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+              return r ? `${parseInt(r[1],16)}, ${parseInt(r[2],16)}, ${parseInt(r[3],16)}` : '99,102,241';
+            };
+
+            function stars(n) {
+              return [1,2,3,4,5].map(s=>`<span style="color:${s<=n?'#f59e0b':'#d1d5db'};font-size:14px">★</span>`).join('');
+            }
+            function initials(name) {
+              return name.split(' ').map(n=>n[0]||'').join('').toUpperCase().slice(0,2);
+            }
+            function esc(s) {
+              const d=document.createElement('div');
+              d.appendChild(document.createTextNode(s));
+              return d.innerHTML;
+            }
+
+            const accentRgb = hexToRgb(color);
+            const layoutClass = layout==='list'?'tv-list':layout==='carousel'?'tv-carousel':'tv-grid';
+
+            const cards = data.data.map(t => {
+              const date = new Date(t.createdAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+              return `<div class="tv-card">
+                <div class="tv-card-header">
+                  <div class="tv-avatar" style="background:rgba(${accentRgb},0.15);color:${color}">
+                    ${t.photoUrl
+                      ? `<img src="${API_BASE.replace('/api','')}${t.photoUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" />`
+                      : initials(t.name)}
+                  </div>
+                  <div>
+                    <div class="tv-name">${esc(t.name)}</div>
+                    ${t.company?`<div class="tv-company">${esc(t.company)}</div>`:''}
+                  </div>
+                </div>
+                <div>${stars(t.rating)}</div>
+                <p class="tv-text">"${esc(t.text)}"</p>
+                <div class="tv-date">${date}</div>
+              </div>`;
+            }).join('');
+
+            container.innerHTML = `
+              <div class="tv-widget">
+                <div class="tv-header"><h3>⭐ What People Are Saying</h3><p>Verified customer testimonials</p></div>
+                <div class="${layoutClass}">${cards}</div>
+                <div class="tv-footer">Powered by <a href="#" style="color:${color}">TrustVoice</a></div>
+              </div>`;
+          })
+          .catch(() => {
+            container.innerHTML = '<div style="text-align:center;padding:40px;color:#ef4444">⚠️ Backend not running. Start the server first.</div>';
+          });
+      }
+    </script>
+  </body>
+</html>

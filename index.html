@@ -391,6 +391,10 @@
             container.innerHTML = '<div style="text-align:center;padding:40px;color:#ef4444">⚠️ Backend not running. Start the server first.</div>';
           });
       }
+      // Load testimonials automatically when the page opens
+document.addEventListener("DOMContentLoaded", () => {
+  reloadWidget();
+});
     </script>
   </body>
 </html>
